@@ -1,0 +1,528 @@
+{
+  "name": "md file embedding",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -464
+      ],
+      "id": "26d9e9b3-924c-4ed8-b996-abe3399954f5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "=**/*.md",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        -464
+      ],
+      "id": "619e74d5-1fd7-436b-bfc7-9fdca6071fb9",
+      "name": "Import files"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documentations",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        1152,
+        -464
+      ],
+      "id": "59dbda95-18b9-4ca7-b4b0-842a925adf0f",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "o5t6XpukqxAjITEs",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "embeddinggemma:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        1168,
+        -240
+      ],
+      "id": "ecc14adb-e878-4c5c-acc7-c502ec76f685",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "BvQHL5NrAHlV0oHc",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        -240
+      ],
+      "id": "ac8dc77a-aa0d-41cd-8769-4869eb807fbb",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -816,
+        -480
+      ],
+      "id": "7152db67-f83a-43f1-82c2-c7c3be6cef48",
+      "name": "When chat message received",
+      "webhookId": "9e6cc3fe-a500-4e3d-888b-b89a1a297187",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documentations",
+          "mode": "list",
+          "cachedResultName": "documentations"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -640,
+        -176
+      ],
+      "id": "9a5c03de-1b59-468f-acd2-5ca879d284ec",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "o5t6XpukqxAjITEs",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "embeddinggemma:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        -32
+      ],
+      "id": "be9b2e17-3653-49a8-9f3b-482fdaca1565",
+      "name": "Embeddings Ollama1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "BvQHL5NrAHlV0oHc",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen3-vl:8b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        -304
+      ],
+      "id": "1b9fcf8b-9d96-46b8-9f19-930d40d7de77",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "BvQHL5NrAHlV0oHc",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        928,
+        -464
+      ],
+      "id": "41ccff8b-4deb-498d-aabb-cba48b36c281",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "content": "Register documentations",
+        "height": 432,
+        "width": 1088,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        400,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "867f41e5-de88-474f-9b72-0e03d23d6c32",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "chatbot try 1",
+        "height": 624,
+        "width": 576,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "3ca08c3c-ee41-421e-b4bf-57b245821067",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemPromptTemplate": "You are a helpful AI assistant\nYou will use a mostly formal and friendly language, but use the 2nd singular pronoun ('you') to adress the user.\nYou have some limited small talk capabilities. If you engage in small talk, you don't have to state your specialization.\nYou only answer with the informations you can find with the \"Documentation Vector store retrieval\" node connected to you that should concern information about Track Advance\n----------------\nContext: {context}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+      "typeVersion": 1.7,
+      "position": [
+        -672,
+        -480
+      ],
+      "id": "a942e004-bfef-411d-bcd3-ae1593f9a286",
+      "name": "Question and Answer Chain"
+    },
+    {
+      "parameters": {
+        "topK": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -320
+      ],
+      "id": "0e05371a-ca69-46ef-a413-0459c5f8a5bb",
+      "name": "Documentation Vector store retrieval"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "documentations",
+          "mode": "list",
+          "cachedResultName": "documentations"
+        },
+        "topK": 40,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        16,
+        -272
+      ],
+      "id": "209e089b-0a24-4a7a-8234-53687b7ae350",
+      "name": "Qdrant Vector Store2",
+      "credentials": {
+        "qdrantApi": {
+          "id": "o5t6XpukqxAjITEs",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "embeddinggemma:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        16,
+        -96
+      ],
+      "id": "e7b1715f-e289-4cce-a8d5-13045f4307ae",
+      "name": "Embeddings Ollama2",
+      "credentials": {
+        "ollamaApi": {
+          "id": "BvQHL5NrAHlV0oHc",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen3-vl:8b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        -320
+      ],
+      "id": "c5cc083c-1385-40ba-b3e5-6234470ac359",
+      "name": "Ollama Chat Model1",
+      "credentials": {
+        "ollamaApi": {
+          "id": "BvQHL5NrAHlV0oHc",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "chatbot try 2",
+        "height": 624,
+        "width": 576,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -240,
+        -528
+      ],
+      "typeVersion": 1,
+      "id": "38cfb6c7-796d-446c-8abe-df5c3356e7e2",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -192,
+        -480
+      ],
+      "id": "5cb65012-6496-4df9-b49c-c72893cb8377",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -96,
+        -192
+      ],
+      "id": "41232632-4f16-4e5d-9c7e-2fdf46203d1c",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Import files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Import files": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        []
+      ]
+    },
+    "Embeddings Ollama1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "ai_tool": [
+        []
+      ],
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Documentation Vector store retrieval",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Documentation Vector store retrieval": {
+      "ai_retriever": [
+        [
+          {
+            "node": "Question and Answer Chain",
+            "type": "ai_retriever",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "ai_vectorStore": [
+        []
+      ],
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "84cda78e-c883-4632-a53c-3d104a3f54e0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f7704bae6e1513f44e589cd134e62cf5c6381c6d56feb8ce65c8bd2d52d117d4"
+  },
+  "id": "hCXYsEW7y2Ws4hu2",
+  "tags": []
+}

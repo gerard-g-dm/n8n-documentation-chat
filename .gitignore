@@ -1,0 +1,11 @@
+# Qdrant data
+n8n/qdrant_data/
+
+# N8N internal data
+n8n/n8n_data/
+
+# Python venv
+ollama/
+
+# OS
+.DS_Store
